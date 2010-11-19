@@ -1,16 +1,85 @@
 <% content_for :head do %>
+  
   <script type="text/javascript" charset="utf-8">
-    // your code here
+    if(window['console']) {
+      Pusher.log = function() {
+        console.log(Array.prototype.slice.call(arguments, 0))
+      }
+    }
+    
+    var Widgets = {};
+    
+    $(function(){
+      
+      $('#status').text('connecting...');
+      
+      var pusher = new Pusher('cd9dd4f9a0f97e3a5bf1');
+      
+      pusher.bind('pusher:connection_established', function () {
+        $('#status')
+          .removeClass('disconnected')
+          .addClass('connected')
+          .text('connected');
+      });
+      
+      /*------------------------------------------------------
+      AJAX messages to server
+      -------------------------------------------------------*/
+      $('#post').submit(function () {
+        var form = $(this),
+            url = form.attr('action'),
+            method = form.attr('method'),
+            data = form.serialize(),
+            body = form.find('input#body');
+        
+        $.ajax({
+          type: method,
+          url: url,
+          data: data,
+          success: function () {body.val('')}
+        });
+        return false;
+      });
+      
+      /*------------------------------------------------------
+      Subscribe to chat channel
+      -------------------------------------------------------*/
+      var chat = pusher.subscribe('presence-chat');
+      
+      /*------------------------------------------------------
+      Initialize widgets
+      -------------------------------------------------------*/
+      for(var widget in Widgets) {
+        new Widgets[widget]( chat );
+      }
+      
+    })
   </script>
+  
+  <script type="text/javascript" charset="utf-8" src="/widgets/messages.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/widgets/members.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/widgets/sound_alerts.js"></script>
 <% end %>
 
-<ul id="messages" class="rounded">
+<div class="clearfix">  
+
+  <ul id="messages" class="rounded">
   
-</ul>
+  </ul>
+  
+  <div id="sidebar">
+    <h2>Online members</h2>
+    <ul id="members">
+
+    </ul>
+  </div>
+  
+  
+</div>
 
 <fieldset>
-  <form id="post">    
-    <input type="text" size="60" name="message" placeholder="Say something" />
+  <form id="post" method="post" action="/messages">
+    <input type="text" size="60" name="message[body]" placeholder="Say something" id="body" />
     <input type="submit" value="say it" />
   </form>
 </fieldset>

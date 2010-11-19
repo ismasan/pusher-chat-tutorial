@@ -1,4 +1,4 @@
-body, html, table, form, ul, ol, li, dt, dd, dl, fieldset {
+body, html, table, form, ul, ol, li, dt, dd, dl, fieldset, h2 {
   padding:0;
   margin:0;
 }
@@ -65,6 +65,8 @@ h1 {
 /* Chat
 -------------------------------*/
 #messages {
+  float: left;
+  width: 70%;
   margin-bottom: 20px;
   max-height: 200px;
   overflow: auto;
@@ -83,4 +85,54 @@ h1 {
 input[type=text] {
   font-size: 20px;
   padding: .25em;
+}
+
+/* members
+-------------------------------*/
+#sidebar {
+  float: right;
+  width: 20%;
+}
+#sidebar h2 {
+  margin-bottom: 1em;
+}
+
+ul#members {
+  list-style-type: none;
+}
+#members li img {
+  vertical-align: middle;
+}
+#members li {
+  margin-bottom: 3px;
+  color: #000;
+  background:#A3FB93;
+}
+#members li .avatar {
+  display:inline-block;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.296875) 1px 1px 4px;
+  padding: 4px;
+  background: yellow;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  margin-right: 5px;
+  border:solid gray 1px;
+}
+
+/* hacks */
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+ 
+html[xmlns] .clearfix {
+	display: block;
+}
+ 
+* html .clearfix {
+	height: 1%;
 }

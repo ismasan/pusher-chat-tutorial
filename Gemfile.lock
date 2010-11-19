@@ -1,7 +1,17 @@
 GEM
   remote: http://rubygems.org/
   specs:
+    crack (0.1.8)
+    json (1.4.6)
+    pusher (0.6.0)
+      crack
+      json
+      ruby-hmac
+      signature
     rack (1.2.1)
+    ruby-hmac (0.4.0)
+    signature (0.1.2)
+      ruby-hmac
     sinatra (1.0)
       rack (>= 1.0)
     sinatra-content-for (0.2)
@@ -11,5 +21,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  pusher
   sinatra
   sinatra-content-for
