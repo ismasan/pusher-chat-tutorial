@@ -6,6 +6,8 @@ require 'sinatra/content_for'
 require 'pusher'
 require 'config'
 
+class User < Struct.new(:user_name, :email);end
+
 class Site < Sinatra::Base
   
   enable  :static, :sessions
@@ -21,12 +23,37 @@ class Site < Sinatra::Base
   
   helpers Sinatra::ContentFor
   
+  helpers do
+    def current_user
+      @current_user ||= (session[:user_name] ? User.new(session[:user_name], session[:email]) : nil)
+    end
+  end
+  
   get '/?' do
+    redirect '/login' unless current_user
     erb :pusher_chat
   end
   
-  post '/messages' do
-    Pusher['chat'].trigger('message', params[:message])
+  get '/login' do
+    erb :login
   end
-
+  
+  get '/logout' do
+    session.delete(:user_name)
+    session.delete(:email)
+    redirect '/login'
+  end
+  
+  post '/authorize' do
+    session[:user_name] = params[:user][:user_name]
+    session[:email] = params[:user][:email]
+    redirect '/'
+  end
+  
+  post '/messages' do
+    message = params[:message]
+    message[:user] = current_user.user_name
+    Pusher['chat'].trigger('message', message)
+  end
+  
 end

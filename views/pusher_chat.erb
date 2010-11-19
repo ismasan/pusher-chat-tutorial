@@ -27,14 +27,7 @@
             url = form.attr('action'),
             method = form.attr('method'),
             data = form.serialize(),
-            user_name = form.find('input#user_name'),
             body = form.find('input#body');
-            
-        if(user_name.val().trim() == '') {
-          alert('User name!');
-          user_name.focus();
-          return false;
-        }
         
         $.ajax({
           type: method,

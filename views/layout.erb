@@ -13,7 +13,7 @@
   <div id="wrapper">
     
     <div id="main" class="rounded shadowed">
-      <h1>http://<%= IP %>:4567</h1>
+      <h1>http://<%= IP %>:4567 | <%= current_user ? current_user.user_name : 'logged out' %></h1>
       <div id="primary">
         <%= yield %>
       </div>
