@@ -19,11 +19,31 @@
           .text('connected');
       });
       
-      /* -----------------------------------------------------
-      Listen to socket messages
+      /*------------------------------------------------------
+      AJAX messages to server
       -------------------------------------------------------*/
-      
-      
+      $('#post').submit(function () {
+        var form = $(this),
+            url = form.attr('action'),
+            method = form.attr('method'),
+            data = form.serialize(),
+            user_name = form.find('input#user_name'),
+            body = form.find('input#body');
+            
+        if(user_name.val().trim() == '') {
+          alert('User name!');
+          user_name.focus();
+          return false;
+        }
+        
+        $.ajax({
+          type: method,
+          url: url,
+          data: data,
+          success: function () {body.val('')}
+        });
+        return false;
+      });
 
     })
   </script>
@@ -34,8 +54,9 @@
 </ul>
 
 <fieldset>
-  <form id="post">    
-    <input type="text" size="60" name="message" placeholder="Say something" />
+  <form id="post" method="post" action="/messages">
+    <input type="text" size="13" name="message[user]" placeholder="Your name" id="user_name" />
+    <input type="text" size="60" name="message[body]" placeholder="Say something" id="body" />
     <input type="submit" value="say it" />
   </form>
 </fieldset>
