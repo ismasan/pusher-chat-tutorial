@@ -62,13 +62,31 @@
   </script>
 <% end %>
 
-<ul id="messages" class="rounded">
+<div class="clearfix">  
+
+  <ul id="messages" class="rounded">
   
-</ul>
+  </ul>
+  
+  <div id="sidebar">
+    <h2>Online members</h2>
+    <ul id="members">
+      <li class="member online"> 
+        <span class="avatar"><img src="http://www.gravatar.com/avatar/38fbbfd1ca6656064fe7ff2e708d79d8.png?s=40" valign="middle" /></span> 
+        <span class="name">ismasan</span> 
+      </li>
+      <li class="member online"> 
+        <span class="avatar"><img src="http://www.gravatar.com/avatar/38fbbfd1ca6656064fe7ff2e708d79d8.png?s=40" valign="middle" /></span> 
+        <span class="name">juan</span> 
+      </li>
+    </ul>
+  </div>
+  
+  
+</div>
 
 <fieldset>
   <form id="post" method="post" action="/messages">
-    <input type="text" size="13" name="message[user]" placeholder="Your name" id="user_name" />
     <input type="text" size="60" name="message[body]" placeholder="Say something" id="body" />
     <input type="submit" value="say it" />
   </form>
