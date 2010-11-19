@@ -9,6 +9,10 @@ require 'digest/md5'
 
 class User < Struct.new(:user_name, :email)
   
+  def id
+    Digest::MD5.hexdigest email
+  end
+  
   def gravatar_url(size=40)
     "http://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(email)}.png?s=#{size}"
   end
@@ -67,7 +71,7 @@ class Site < Sinatra::Base
     if current_user
       auth = Pusher[params[:channel_name]].authenticate(params[:socket_id],
         # mandatory
-        :user_id => current_user.email,
+        :user_id => current_user.id,
         # optional
         :user_info => {
           :user_name   => current_user.user_name, 
