@@ -105,23 +105,19 @@ ul#members {
 }
 #members li {
   margin-bottom: 3px;
-  color: #999;
+  color: #000;
+  background:#A3FB93;
 }
 #members li .avatar {
   display:inline-block;
   -webkit-box-shadow: rgba(0, 0, 0, 0.296875) 1px 1px 4px;
   padding: 4px;
-  background: #eee;
+  background: yellow;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   margin-right: 5px;
   border:solid gray 1px;
 }
-#members li.online {
-  color: #000;
-  background:#A3FB93;
-}
-#members li.online .avatar {background:yellow;}
 
 /* hacks */
 .clearfix:after {

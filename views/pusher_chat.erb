@@ -51,6 +51,24 @@
           .text(message.user + ' dice: ' + message.body)
           .appendTo('#messages');
       });
+      
+      /*------------------------------------------------------
+      Handle existing members
+      -------------------------------------------------------*/
+      chat.bind('pusher:subscription_succeeded', function (members) {
+        $.each(members, function (i, member) {
+          var avatar = $('<span>').addClass('avatar');
+          $('<img>').attr('src', member.user_info.gravatar_url).appendTo(avatar);
+          var name = $('<span>').addClass('name').text(member.user_info.user_name);
+          
+          var li = $('<li>')
+            .attr('id', member.user_id)
+            .addClass('member')
+            .append(avatar)
+            .append(name)
+            .appendTo('#members');
+        })
+      });
     })
   </script>
 <% end %>
@@ -64,14 +82,7 @@
   <div id="sidebar">
     <h2>Online members</h2>
     <ul id="members">
-      <li class="member online"> 
-        <span class="avatar"><img src="http://www.gravatar.com/avatar/38fbbfd1ca6656064fe7ff2e708d79d8.png?s=40" valign="middle" /></span> 
-        <span class="name">ismasan</span> 
-      </li>
-      <li class="member online"> 
-        <span class="avatar"><img src="http://www.gravatar.com/avatar/38fbbfd1ca6656064fe7ff2e708d79d8.png?s=40" valign="middle" /></span> 
-        <span class="name">juan</span> 
-      </li>
+
     </ul>
   </div>
   
