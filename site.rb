@@ -53,7 +53,19 @@ class Site < Sinatra::Base
   post '/messages' do
     message = params[:message]
     message[:user] = current_user.user_name
-    Pusher['chat'].trigger('message', message)
+    Pusher['private-chat'].trigger('message', message)
+  end
+  
+  post '/pusher/auth' do
+    if current_user
+      auth = Pusher[params[:channel_name]].authenticate(params[:socket_id],
+        :user_id => current_user.email
+      )
+      content_type 'application/json'
+      Pusher::JSON.generate auth
+    else
+      halt 403, "Not authorized"
+    end
   end
   
 end
