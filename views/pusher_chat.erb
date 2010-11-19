@@ -1,6 +1,31 @@
 <% content_for :head do %>
   <script type="text/javascript" charset="utf-8">
-    // your code here
+    if(window['console']) {
+      Pusher.log = function() {
+        console.log(Array.prototype.slice.call(arguments, 0))
+      }
+    }
+    
+    $(function(){
+      
+      $('#status').text('connecting...');
+      
+      var pusher = new Pusher('cd9dd4f9a0f97e3a5bf1');
+      
+      pusher.bind('pusher:connection_established', function () {
+        $('#status')
+          .removeClass('disconnected')
+          .addClass('connected')
+          .text('connected');
+      });
+      
+      /* -----------------------------------------------------
+      Listen to socket messages
+      -------------------------------------------------------*/
+      
+      
+
+    })
   </script>
 <% end %>
 
